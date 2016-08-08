@@ -1,0 +1,42 @@
+body {
+	background-color: grey;
+}
+
+#tictactoe-board {
+	margin: auto;
+	position: relative;
+	top: 50px;
+	width: 400px;
+	height: 400px;
+	font-size: 550%;
+}
+
+#tictactoe-grid-selection-text {
+	font-family: courier;
+	font-size: 300%;
+}
+
+.tictactoe-squares {
+	float: left;
+	border-style: solid;
+	border-color: black;
+	border-width: 2px;
+}
+
+.tictactoe-squares:hover {
+	background-color: white;
+	cursor: pointer;
+}
+
+#reset-conditions {
+	background-color: white;
+	padding: 2px 2px;
+	color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+#reset-conditions:hover {
+	padding: 3px 3px;
+}
