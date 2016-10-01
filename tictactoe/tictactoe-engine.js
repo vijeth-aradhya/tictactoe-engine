@@ -72,21 +72,18 @@
 		    this.gridParent.innerHTML += '<a href="./tictactoe.html" id="reset-conditions">Reset conditions</a>';
 
             this.playAgainButton = document.getElementById("tictactoe-play-again");
-            this.playAgainButton.addEventListener("click", this.playAgain);
+            this.playAgainButton.addEventListener("click", this.playAgain.bind(this));
         },
         makeMove(e){
             switch(this.numOfPlayers) {
 				case "1":
 					document.addEventListener('click', this.onePlayerGame.bind(this));
-					console.log("One player event listener added")
 					break;
 				case "2":
 					document.addEventListener('click', this.twoPlayerGame.bind(this));
-					console.log("Two player event listener added")
 					break;
 				default:
 					document.addEventListener('click', this.onePlayerGame.bind(this));
-					console.log("Default, One player event listener added")
 					break;
 			}
         },
