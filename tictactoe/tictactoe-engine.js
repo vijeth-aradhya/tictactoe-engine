@@ -3,20 +3,37 @@ window.onload = main;
 var game = 0;
 var eachSquare = [];
 var numOfGrids = 0;
+var numOfPlayers = 0;
 var turn = 0;
+var thisSquare = null;
 
 function main() {
 	var thisIndex;
-	var thisBoard = document.getElementById("tictactoe-board");
+  	var gridParent = document.getElementById("tictactoe-grid-select-div");
+	var playersParent = document.getElementById("tictactoe-players-select-div");
+  	var thisBoard = document.getElementById("tictactoe-board");
+	var playersSelection = document.getElementById("tictactoe-choose-number-of-players");
 	var gridSelection = document.getElementById("tictactoe-create-grid");
 
+	playersSelection.addEventListener("click", setNumOfPlayers, false);
+  
+	function setNumOfPlayers() {
+		numOfPlayers = document.getElementById("tictactoe-players-selection").value;
+		console.log("Players: " + numOfPlayers);
+		document.getElementById("tictactoe-grid-select-div").style.display = "inline";
+	};
+  
 	gridSelection.addEventListener("click", function () {
 		var i=0;
 		numOfGrids = document.getElementById("tictactoe-grid-selection").value;
-		var gridParent = document.getElementById("tictactoe-info");
-		gridParent.removeChild(gridSelection);
+		
+		gridParent.removeChild(document.getElementById("tictactoe-create-grid"));
 		gridParent.removeChild(document.getElementById("tictactoe-grid-selection"));
-		document.getElementById("tictactoe-grid-selection-text").innerHTML = "Play on and enjoy!";
+		playersParent.removeChild(document.getElementById("tictactoe-choose-number-of-players"));
+		playersParent.removeChild(document.getElementById("tictactoe-players-selection"));
+		playersParent.removeChild(document.getElementById("tictactoe-players-selection-text"));
+
+		document.getElementById("tictactoe-grid-selection-text").innerHTML = "Play on and enjoy!";	
 		while(i<(numOfGrids*numOfGrids)) {
 			thisSquare = '<div id="tictactoe-square-' + i + '" class="tictactoe-squares" align="center" state="not-played"></div>';
 			thisBoard.innerHTML += thisSquare;
@@ -54,50 +71,80 @@ function main() {
 	});
 
 	thisBoard.addEventListener("click", function () {	
-		document.addEventListener('click', function(e) {
-    		e = e || window.event;
-    		var target = e.target
-    		if(target.getAttribute("state") == "not-played" && game == 0) {	
-    			target.setAttribute("state", "played");
-    			if(turn%2 == 0) {
-    				target.innerHTML = "X";
-    			}
-    			else {
-    				target.innerHTML = "O";
-    			}
-    			turn++;
-//    			playAI(eachSquare, turn, "X");
-				checkWin();
-				if(turn == 9) {
-					gridParent.innerHTML += "<br>It is a draw."
-					game = 1;
-				}
-				if(game == 0) {
-    				if(turn%2 == 0) {	
-    					thisIndex = (playAI(eachSquare, turn, "X") + " ").split(" ");
-    					console.log(thisIndex);
-    					eachSquare[parseInt(thisIndex[1])].innerHTML = "X";
-    					eachSquare[parseInt(thisIndex[1])].setAttribute("state", "played");
-    					turn++;
-    				}
-    				else {
-    					thisIndex = (playAI(eachSquare, turn, "O") + " ").split(" ");
-    					console.log(thisIndex);
-    					eachSquare[parseInt(thisIndex[1])].innerHTML = "O";
-    					eachSquare[parseInt(thisIndex[1])].setAttribute("state", "played");
-    					turn++;
-    				}
-    				checkWin();
-    				if(turn == 9 && game == 0) {
-						gridParent.innerHTML += "<br>It is a draw."
-						game = 1;
-					}
-    			}
-    		}
-		}, false);
+		switch(numOfPlayers) {
+			case "1":
+        document.addEventListener('click', onePlayerGame, false );
+        console.log("One player event listener added")
+        break;
+			case "2":
+			  document.addEventListener('click', twoPlayerGame, false );
+        console.log("Two player event listener added")
+       break;
+			default:
+        document.addEventListener('click', onePlayerGame, false );
+        console.log("Default, One player event listener added")
+        break;
+		}
 	});
-
 }
+
+function onePlayerGame(e) {
+	e = e || window.event;
+	var target = e.target
+	if(target.getAttribute("state") == "not-played" && game == 0) {	
+		target.setAttribute("state", "played");
+		if(turn%2 == 0) {
+			target.innerHTML = "X";
+		}
+		else {
+			target.innerHTML = "O";
+		}
+		turn++;
+//    			playAI(eachSquare, turn, "X");
+		checkWin();
+		if(turn == 9) {
+			gridParent.innerHTML += "<br>It is a draw."
+			game = 1;
+		}
+		if(game == 0) {
+			if(turn%2 == 0) {	
+				thisIndex = (playAI(eachSquare, turn, "X") + " ").split(" ");
+				console.log(thisIndex);
+				eachSquare[parseInt(thisIndex[1])].innerHTML = "X";
+				eachSquare[parseInt(thisIndex[1])].setAttribute("state", "played");
+				turn++;
+			}
+			else {
+				thisIndex = (playAI(eachSquare, turn, "O") + " ").split(" ");
+				console.log(thisIndex);
+				eachSquare[parseInt(thisIndex[1])].innerHTML = "O";
+				eachSquare[parseInt(thisIndex[1])].setAttribute("state", "played");
+				turn++;
+			}
+			checkWin();
+			if(turn == 9 && game == 0) {
+				gridParent.innerHTML += "<br>It is a draw."
+				game = 1;
+			}
+		}
+	}
+};
+
+function twoPlayerGame(e) {
+	e = e || window.event;
+	var target = e.target
+	if(target.getAttribute("state") == "not-played" && game == 0) {	
+		target.setAttribute("state", "played");
+		if(turn%2 == 0) {
+			target.innerHTML = "X";
+		}
+		else {
+			target.innerHTML = "O";
+		}
+		turn++;
+		checkWin();
+	}		
+};
 
 function playAgain() {
 	var j=0;

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
@@ -6,24 +6,37 @@
 	<link rel="stylesheet" type="text/css" href="tictactoe.css">
 	<script src="tictactoe-engine.js"></script> 
 </head>
-<body>
+<body> 
 	<div id="tictactoe-info" align="center">
-		<p id="tictactoe-grid-selection-text">
-			Please select the tictactoe grid that you want to play on
-		</p>
-		<select id="tictactoe-grid-selection">
-  			<option value="3">3</option>
-  			<option value="4">4</option>
-		</select>
-		<button id="tictactoe-create-grid">Create tictactoe grid</button>
+		<h1 id="tictactoe-heading-text">Tic-Tac-Toe</h1>
+		<div id="tictactoe-players-select-div">
+			<p id="tictactoe-players-selection-text">
+				Please select 1 player to play the Computer or 2 player to play another human
+			</p>
+			<button id="tictactoe-choose-number-of-players">Choose number of players</button>
+			<select id="tictactoe-players-selection">
+				<option value="1">1</option>
+				<option value="2">2</option>
+			</select>  
+		</div>
+		<div id="tictactoe-grid-select-div"> 
+			<p id="tictactoe-grid-selection-text">
+				Please select the tictactoe grid that you want to play on
+			</p>
+			<select id="tictactoe-grid-selection">
+				<option value="3">3</option>
+				<option value="4">4</option>
+			</select>
+			<button id="tictactoe-create-grid">Create tictactoe grid</button>
+		</div>
 	</div>
 	<div id="tictactoe-board" align="center">
 	</div>
-</body>
+ </body> 
 <!--
 <script type="text/javascript">
 	var thisSquare = document.getElementById("tictactoe-square");
 	alert(thisSquare);
 </script>
 -->
-</html>
+ </html> 
