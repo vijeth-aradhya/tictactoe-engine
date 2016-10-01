@@ -142,7 +142,7 @@
 					target.innerHTML = "O";
 				}
 				this.turn++;
-				this.checkWin();
+				this.checkWin(true); // true because it is the final check (no temp checks required for two player games)
 			}		
 		},
 		playAI(eachSquare, thisMoveNumber, player){
