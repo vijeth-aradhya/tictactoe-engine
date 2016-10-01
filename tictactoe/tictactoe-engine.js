@@ -1,62 +1,62 @@
 (function(){
 
-	var tictactoe = {
-		game: 0,
+    var tictactoe = {
+        game: 0,
         eachSquare: [],
         numOfGrids: 0,
-		numOfPlayers: 0,
+        numOfPlayers: 0,
         turn: 0,
-		init: function(){
+        init: function(){
             window.onload = function(){
                 tictactoe.cacheDom();
                 tictactoe.bindEvents();
             }
         },
-		cacheDom: function(){
+        cacheDom: function(){
             this.thisBoard = document.getElementById("tictactoe-board");
             this.gridSelection = document.getElementById("tictactoe-create-grid");
             this.gridSelectDropdown = document.getElementById("tictactoe-grid-selection");
-			this.playersParent = document.getElementById("tictactoe-players-select-div");
+            this.playersParent = document.getElementById("tictactoe-players-select-div");
             this.gridSelectionText = document.getElementById("tictactoe-grid-selection-text");
-			this.playerSelection = document.getElementById("tictactoe-choose-number-of-players");
-			this.playerSelectDropdown = document.getElementById("tictactoe-players-selection");
-			this.playerSelectText = document.getElementById("tictactoe-players-selection-text");
-			this.gridParent = document.getElementById("tictactoe-grid-select-div");
-			this.playAgainButton;
+            this.playerSelection = document.getElementById("tictactoe-choose-number-of-players");
+            this.playerSelectDropdown = document.getElementById("tictactoe-players-selection");
+            this.playerSelectText = document.getElementById("tictactoe-players-selection-text");
+            this.gridParent = document.getElementById("tictactoe-grid-select-div");
+            this.playAgainButton;
         },
         bindEvents: function(){
             this.gridSelection.addEventListener("click", this.createGrid.bind(this));
             this.thisBoard.addEventListener("click", this.makeMove.bind(this));
-			this.playerSelection.addEventListener("click", this.setNumOfPlayers.bind(this));
+            this.playerSelection.addEventListener("click", this.setNumOfPlayers.bind(this));
         },
-		setNumOfPlayers() {
-			this.numOfPlayers = this.playerSelectDropdown.value;
-			this.gridParent.style.display = "inline";
-		},
-		createGrid: function(){
+        setNumOfPlayers() {
+            this.numOfPlayers = this.playerSelectDropdown.value;
+            this.gridParent.style.display = "inline";
+        },
+        createGrid: function(){
             this.numOfGrids = parseInt(this.gridSelectDropdown.value);
-
+            
             this.squareSize = this.numOfGrids * this.numOfGrids;
-
+            
             this.gridParent.removeChild(this.gridSelection);
             this.gridParent.removeChild(this.gridSelectDropdown);
-			this.playersParent.removeChild(this.playerSelection);
-			this.playersParent.removeChild(this.playerSelectDropdown);
-			this.playersParent.removeChild(this.playerSelectText);
-
+            this.playersParent.removeChild(this.playerSelection);
+            this.playersParent.removeChild(this.playerSelectDropdown);
+            this.playersParent.removeChild(this.playerSelectText);
+        
             this.gridSelectionText.innerHTML = "Play on and enjoy!";
-
+            
             var i=0;
             while(i < this.squareSize) {
                 var thisSquare = '<div id="tictactoe-square-' + i + '" class="tictactoe-squares" align="center" state="not-played"></div>';
                 this.thisBoard.innerHTML += thisSquare;
                 i++;
             }
-
+        
             var j=0;
             while(j < this.squareSize){
                 this.eachSquare.push(document.getElementById("tictactoe-square-" + j));
-                if(this.numOfGrids == 3) {	
+                if(this.numOfGrids == 3) {    
                     this.eachSquare[j].style.width = "30%";
                     this.eachSquare[j].style.height = "30%";
                 }
@@ -66,51 +66,51 @@
                 }
                 j++;
             }
-
+        
             // TODO move the dom manipulation into it's own method'
             this.gridParent.innerHTML += '<button id="tictactoe-play-again">Play again</button><br><br>';
-		    this.gridParent.innerHTML += '<a href="./tictactoe.html" id="reset-conditions">Reset conditions</a>';
-
+            this.gridParent.innerHTML += '<a href="./tictactoe.html" id="reset-conditions">Reset conditions</a>';
+            
             this.playAgainButton = document.getElementById("tictactoe-play-again");
             this.playAgainButton.addEventListener("click", this.playAgain.bind(this));
         },
         makeMove(e){
             switch(this.numOfPlayers) {
-				case "1":
-					document.addEventListener('click', this.onePlayerGame.bind(this));
-					break;
-				case "2":
-					document.addEventListener('click', this.twoPlayerGame.bind(this));
-					break;
-				default:
-					document.addEventListener('click', this.onePlayerGame.bind(this));
-					break;
-			}
+                case "1":
+                    document.addEventListener('click', this.onePlayerGame.bind(this));
+                    break;
+                case "2":
+                    document.addEventListener('click', this.twoPlayerGame.bind(this));
+                    break;
+                default:
+                    document.addEventListener('click', this.onePlayerGame.bind(this));
+                    break;
+            }
         },
-		onePlayerGame(e){
-			e = e || window.event;
+        onePlayerGame(e){
+            e = e || window.event;
             var target = e.target;
-            if(target.getAttribute("state") == "not-played" && this.game == 0) {	
-    			target.setAttribute("state", "played");
-    			if(this.turn%2 == 0) {
-    				target.innerHTML = "X";
-    			}
-    			else {
-    				target.innerHTML = "O";
-    			}
-    			this.turn++;
-//    			playAI(eachSquare, turn, "X");
-				this.checkWin(true); // true because it is a finalCheck and not a temp check
+            if(target.getAttribute("state") == "not-played" && this.game == 0) {    
+                target.setAttribute("state", "played");
+                if(this.turn%2 == 0) {
+                    target.innerHTML = "X";
+                }
+                else {
+                    target.innerHTML = "O";
+                }
+                this.turn++;
+                // playAI(eachSquare, turn, "X");
+                this.checkWin(true); // true because it is a finalCheck and not a temp check
                 // Hardcoded 9, not applicable for 4x4 game
-				if(this.turn == 9) {
+                if(this.turn == 9) {
                     // TODO fix bug. When adding extra html to the parent, it removes the event listener on the button click
-					// gridParent.innerHTML += "<br>It is a draw."
-					this.game = 1;
+                    // gridParent.innerHTML += "<br>It is a draw."
+                    this.game = 1;
                     return;
-				}
+                }
                 // TODO refactor the below code
                 // checkWin and the full grid check are duplicated
-                if(this.turn%2 == 0) {	
+                if(this.turn%2 == 0) {    
                     this.thisIndex = (this.playAI(this.eachSquare, this.turn, "X") + " ").split(" ");
                     this.eachSquare[parseInt(this.thisIndex[1])].innerHTML = "X";
                     this.eachSquare[parseInt(this.thisIndex[1])].setAttribute("state", "played");
@@ -128,24 +128,24 @@
                     // gridParent.innerHTML += "<br>It is a draw."
                     this.game = 1;
                 }
-    		}
-		},
-		twoPlayerGame(e) {
-			e = e || window.event;
-			var target = e.target
-			if(target.getAttribute("state") == "not-played" && this.game == 0) {	
-				target.setAttribute("state", "played");
-				if(this.turn%2 == 0) {
-					target.innerHTML = "X";
-				}
-				else {
-					target.innerHTML = "O";
-				}
-				this.turn++;
-				this.checkWin(true); // true because it is the final check (no temp checks required for two player games)
-			}		
-		},
-		playAI(eachSquare, thisMoveNumber, player){
+            }
+        },
+        twoPlayerGame(e) {
+            e = e || window.event;
+            var target = e.target
+            if(target.getAttribute("state") == "not-played" && this.game == 0) {    
+                target.setAttribute("state", "played");
+                if(this.turn%2 == 0) {
+                    target.innerHTML = "X";
+                }
+                else {
+                    target.innerHTML = "O";
+                }
+                this.turn++;
+                this.checkWin(true); // true because it is the final check (no temp checks required for two player games)
+            }        
+        },
+        playAI(eachSquare, thisMoveNumber, player){
             var tempCheckWin;
             //console.log("This is " + str(thisMoveNumber) + "and player is" + str(player)); str is not defined?
             tempCheckWin = this.checkWin(); // no args because it is a temp check
@@ -196,7 +196,7 @@
             returnString = minimax + " " + returnIndex;
             return(returnString);
         },
-		playAgain() {
+        playAgain() {
             var j = 0;
             while(j < this.squareSize){
                 this.eachSquare[j].setAttribute("state", "not-played");
@@ -243,7 +243,7 @@
                 return 1;
             }
         },
-		// TODO maybe consolodate the 3 check functions into 1 because a lot of the code is repeating		// TODO maybe consolodate the 3 check functions into 1 because a lot of the code is repeating
+        // TODO maybe consolodate the 3 check functions into 1 because a lot of the code is repeating        // TODO maybe consolodate the 3 check functions into 1 because a lot of the code is repeating
         checkRow(row){
             var rowStart = row * this.numOfGrids;
             var rowEnd = rowStart + this.numOfGrids;
@@ -316,7 +316,8 @@
                 this.eachSquare[j].style.backgroundColor = "green"; 
             }
         }
-	}
+    }
 
-	tictactoe.init();
+    tictactoe.init();
+
 })();
