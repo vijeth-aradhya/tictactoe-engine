@@ -218,7 +218,7 @@
                     } 
                     return 1;
                 }
-                if(this.checkColomn(j)) {
+                if(this.checkColumn(j)) {
                     if(finalCheck){
                         this.highlightWinningLine(j, 'column');
                         this.game = 1;
@@ -243,7 +243,7 @@
                 return 1;
             }
         },
-		// TODO maybe consolodate the 3 check functions into 1 because a lot of the code is repeating
+		// TODO maybe consolodate the 3 check functions into 1 because a lot of the code is repeating		// TODO maybe consolodate the 3 check functions into 1 because a lot of the code is repeating
         checkRow(row){
             var rowStart = row * this.numOfGrids;
             var rowEnd = rowStart + this.numOfGrids;
@@ -258,7 +258,7 @@
             }    
             return false; 
         },
-        checkColomn(column){
+        checkColumn(column){
             var columnStart = column;
             var columnEnd = columnStart + this.numOfGrids * (this.numOfGrids - 1);
             if(this.eachSquare[columnStart].getAttribute("state") == "played"){
