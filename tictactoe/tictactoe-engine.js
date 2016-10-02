@@ -34,14 +34,14 @@
 
     /* METHOD IMPLEMENTATIONS */
 
-    var init = function(){
+    function init(){
         window.onload = function(){
             tictactoe.cacheDom();
             tictactoe.bindEvents();
         }
     }
 
-    var cacheDom = function(){
+    function cacheDom(){
         this.thisBoard = document.getElementById("tictactoe-board");
         this.gridSelection = document.getElementById("tictactoe-create-grid");
         this.gridSelectDropdown = document.getElementById("tictactoe-grid-selection");
@@ -54,17 +54,17 @@
         this.playAgainButton;
     }
 
-    var bindEvents = function(){
+    function bindEvents(){
         this.gridSelection.addEventListener("click", this.createGrid.bind(this));
         this.thisBoard.addEventListener("click", this.makeMove.bind(this));
         this.playerSelection.addEventListener("click", this.setNumOfPlayers.bind(this));
     }
-    var setNumOfPlayers = function() {
+    function setNumOfPlayers() {
         this.numOfPlayers = this.playerSelectDropdown.value;
         this.gridParent.style.display = "inline";
     }
 
-    var createGrid = function(){
+    function createGrid(){
         this.numOfGrids = parseInt(this.gridSelectDropdown.value);
         
         this.squareSize = this.numOfGrids * this.numOfGrids;
@@ -106,7 +106,7 @@
         this.playAgainButton.addEventListener("click", this.playAgain.bind(this));
     }
 
-    var makeMove = function(e){
+    function makeMove(e){
         switch(this.numOfPlayers) {
             case "1":
                 document.addEventListener('click', this.onePlayerGame.bind(this));
@@ -120,7 +120,7 @@
         }
     }
 
-    var onePlayerGame = function(e){
+    function onePlayerGame(e){
         e = e || window.event;
         var target = e.target;
         if(target.getAttribute("state") == "not-played" && this.game == 0) {    
@@ -164,7 +164,7 @@
         }
     }
 
-    var twoPlayerGame = function(e) {
+    function twoPlayerGame(e) {
         e = e || window.event;
         var target = e.target
         if(target.getAttribute("state") == "not-played" && this.game == 0) {    
@@ -180,7 +180,7 @@
         }        
     }
 
-    var playAgain = function(eachSquare, thisMoveNumber, player){
+    function playAI(eachSquare, thisMoveNumber, player){
         var tempCheckWin;
         //console.log("This is " + str(thisMoveNumber) + "and player is" + str(player)); str is not defined?
         tempCheckWin = this.checkWin(); // no args because it is a temp check
@@ -232,7 +232,7 @@
         return(returnString);
     }
 
-    var playAgain = function() {
+    function playAgain() {
         var j = 0;
         while(j < this.squareSize){
             this.eachSquare[j].setAttribute("state", "not-played");
@@ -244,7 +244,7 @@
         this.turn = 0;
     }
 
-    var checkWin = function(finalCheck) {
+    function checkWin(finalCheck) {
         var j=0;
         // check rows and columns
         while(j < this.numOfGrids) {
@@ -282,7 +282,7 @@
     }
 
     // TODO maybe consolodate the 3 check functions into 1 because a lot of the code is repeating
-    var checkRow = function(row){
+    function checkRow(row){
         var rowStart = row * this.numOfGrids;
         var rowEnd = rowStart + this.numOfGrids;
         // TODO maybe remove the state attribute. Maybe redundant as the X or O implies it's been played anyway
@@ -297,7 +297,7 @@
         return false; 
     }
 
-    var checkColumn = function(column){
+    function checkColumn(column){
         var columnStart = column;
         var columnEnd = columnStart + this.numOfGrids * (this.numOfGrids - 1);
         if(this.eachSquare[columnStart].getAttribute("state") == "played"){
@@ -311,7 +311,7 @@
         return false; 
     }
 
-    var checkDiagonal = function(start){
+    function checkDiagonal(start){
         if(start === 0){
             var diagEnd = this.numOfGrids * this.numOfGrids;
             if(this.eachSquare[start].getAttribute("state") == "played"){
@@ -337,7 +337,7 @@
         }
     }
 
-    var highlightWinningLine = function(start, direction){
+    function highlightWinningLine(start, direction){
         var end, increment;
         if(direction === 'row'){
             end = start + this.numOfGrids;
