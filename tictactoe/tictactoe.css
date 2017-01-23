@@ -2,6 +2,10 @@ body {
 	background-color: grey;
 }
 
+#tictactoe-grid-select-div {
+	display: none;
+}
+
 #tictactoe-board {
 	margin: auto;
 	position: relative;
@@ -11,9 +15,19 @@ body {
 	font-size: 550%;
 }
 
+#tictactoe-heading-text {
+	font-family: Courier New, Courier, monospace;	
+	font-size: 300%
+}
+
 #tictactoe-grid-selection-text {
 	font-family: courier;
-	font-size: 300%;
+	font-size: 200%;
+}
+
+#tictactoe-players-selection-text {
+	font-family: courier;
+	font-size: 200%;  
 }
 
 .tictactoe-squares {
